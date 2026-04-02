@@ -182,10 +182,14 @@ const app = {
                 throw new Error(result.title || `Error ${response.status}`);
             }
 
+            // Show Toast (legacy) and the New Modal
             this.showMessage(`✅ "${result.topic}" created!`);
+            this.showSuccessModal(result);
+
             this.form.reset();
             this.setDefaultStartTime();
 
+            // Refresh list but no need to wait for it before showing success
             this.tokenHistory = [];
             this.currentPage = 0;
             this.nextToken = null;
@@ -197,6 +201,42 @@ const app = {
             this.submitBtn.disabled = false;
             this.submitBtn.textContent = 'Create Meeting';
         }
+    },
+
+    showSuccessModal(m) {
+        const modal = document.getElementById('successModal');
+        const topic = document.getElementById('modalTopic');
+        const joinBtn = document.getElementById('modalJoinBtn');
+
+        this.lastCreatedLink = m.joinUrl;
+        topic.textContent = m.topic;
+        joinBtn.href = m.joinUrl;
+
+        modal.classList.remove('hidden');
+    },
+
+    async copyToClipboard() {
+        if (!this.lastCreatedLink) return;
+        
+        try {
+            await navigator.clipboard.writeText(this.lastCreatedLink);
+            const btn = document.getElementById('copyModalBtn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.style.borderColor = 'var(--primary)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.borderColor = '';
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    },
+
+    closeModal() {
+        const modal = document.getElementById('successModal');
+        modal.classList.add('hidden');
+        this.lastCreatedLink = null;
     },
 
     async deleteMeeting(id) {

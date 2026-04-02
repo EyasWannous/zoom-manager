@@ -235,6 +235,20 @@
                 </section>
             </main>
         </div>
+        
+        <div id="successModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-icon">✅</div>
+                <h3>Meeting Created!</h3>
+                <p id="modalTopic" style="font-weight: 600; margin-bottom: 2rem; color: var(--muted);"></p>
+                
+                <div class="modal-actions">
+                    <a id="modalJoinBtn" href="#" target="_blank" class="btn btn-primary">Join Meeting</a>
+                    <button id="copyModalBtn" onclick="app.copyToClipboard()" class="btn btn-secondary">Copy Link</button>
+                    <button onclick="app.closeModal()" class="btn btn-secondary" style="border: none; margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.8;">Done</button>
+                </div>
+            </div>
+        </div>
 
         <script src="app.js"></script>
     </body>
