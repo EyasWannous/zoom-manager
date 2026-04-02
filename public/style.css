@@ -1,0 +1,330 @@
+:root {
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --danger: #ef4444;
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #f3f4f6;
+    --muted: #9ca3af;
+    --border: #374151;
+    --radius: 10px;
+    --radius-sm: 5px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+.header p {
+    color: var(--muted);
+    margin-top: 0.25rem;
+}
+
+.main-content {
+    display: grid;
+    gap: 1.5rem;
+}
+@media (min-width: 800px) {
+    .main-content {
+        grid-template-columns: 380px 1fr;
+        align-items: start;
+    }
+}
+
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+}
+.card h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.form-group {
+    margin-bottom: 0.9rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 0.75rem;
+}
+.form-row .form-group {
+    flex: 1;
+    min-width: 0;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+    color: var(--text);
+}
+.required {
+    color: var(--danger);
+    margin-left: 2px;
+}
+.hint {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+input[type='text'],
+input[type='number'],
+input[type='datetime-local'],
+input[type='time'],
+input[type='date'],
+textarea,
+select {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    background: #2a2a2a;
+    transition:
+        border-color 0.15s,
+        box-shadow 0.15s;
+    color: var(--text);
+    color-scheme: dark;
+}
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+textarea {
+    resize: vertical;
+}
+
+.settings-section {
+    background: #262626;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem;
+    margin-bottom: 1rem;
+}
+.settings-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.65rem;
+}
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1rem;
+    margin-bottom: 0.25rem;
+}
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    color: var(--text);
+    font-weight: 400;
+}
+.checkbox-label input[type='checkbox'] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition:
+        background 0.15s,
+        opacity 0.15s;
+}
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    width: 100%;
+    margin-top: 0.25rem;
+}
+.btn-primary:hover:not(:disabled) {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: #2d2d2d;
+    color: var(--text);
+    border: 1px solid var(--border);
+    width: auto;
+}
+.btn-secondary:hover {
+    background: #3f3f3f;
+}
+
+.btn-danger {
+    background: transparent;
+    color: var(--danger);
+    font-size: 0.82rem;
+    padding: 0.3rem 0.6rem;
+}
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+}
+.success {
+    background: #064e3b;
+    color: #34d399;
+    border: 1px solid #059669;
+}
+.error {
+    background: #7f1d1d;
+    color: #fca5a5;
+    border: 1px solid #b91c1c;
+}
+.hidden {
+    display: none !important;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+.list-header h2 {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.meetings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+.meetings-table th {
+    text-align: left;
+    padding: 0.6rem 0.9rem;
+    background: #2a2a2a;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border);
+}
+.meetings-table td {
+    padding: 0.85rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+.meetings-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.meetings-table tbody tr:hover {
+    background: #262626;
+}
+
+.status-badge {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.status-waiting {
+    background: #78350f;
+    color: #fcd34d;
+}
+.status-started {
+    background: #064e3b;
+    color: #6ee7b7;
+}
+.status-finished {
+    background: #374151;
+    color: #d1d5db;
+}
+
+.join-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+.join-link:hover {
+    text-decoration: underline;
+}
+
+.text-center {
+    text-align: center;
+}
+.text-muted {
+    color: var(--muted);
+}
+.py-4 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}

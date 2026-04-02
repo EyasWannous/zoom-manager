@@ -1,0 +1,210 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Zoom Meeting Manager API",
+        "description": "API for managing Zoom Meetings using Clean Architecture in Node.js",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/meetings",
+            "description": "Zoom Meetings Local API"
+        }
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "List all meetings",
+                "description": "Fetches a real-time list of all meetings for a specific user ID. Responses are cached.",
+                "responses": {
+                    "200": {
+                        "description": "A list of meetings",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MeetingDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new meeting",
+                "description": "Creates a scheduled Zoom meeting.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateMeetingCommand"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Meeting created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeetingDto"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    }
+                }
+            }
+        },
+        "/{id}": {
+            "delete": {
+                "summary": "Delete a meeting",
+                "description": "Deletes a specific meeting by its ID.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The meeting ID"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Meeting deleted successfully"
+                    },
+                    "404": {
+                        "description": "Meeting not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateMeetingCommand": {
+                "type": "object",
+                "required": ["topic", "startTime", "durationMinutes"],
+                "properties": {
+                    "topic": {
+                        "type": "string",
+                        "description": "The topic / title of the meeting",
+                        "example": "Weekly Sync"
+                    },
+                    "startTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Start time in ISO 8601 UTC format",
+                        "example": "2024-06-01T10:00:00Z"
+                    },
+                    "durationMinutes": {
+                        "type": "integer",
+                        "description": "Duration in minutes (15–1440)",
+                        "example": 60
+                    },
+                    "timezone": {
+                        "type": "string",
+                        "description": "IANA timezone (defaults to UTC)",
+                        "example": "Europe/Amman",
+                        "default": "UTC"
+                    },
+                    "type": {
+                        "type": "integer",
+                        "description": "Meeting type: 1=Instant, 2=Scheduled (default), 3=Recurring, 8=RecurringFixed",
+                        "enum": [1, 2, 3, 8],
+                        "default": 2,
+                        "example": 2
+                    },
+                    "agenda": {
+                        "type": "string",
+                        "description": "Optional meeting agenda (max 2000 chars)",
+                        "example": "Q2 project updates"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Optional meeting password (max 10 chars)",
+                        "example": "abc123"
+                    },
+                    "settings": {
+                        "type": "object",
+                        "description": "Optional Zoom meeting settings",
+                        "properties": {
+                            "waitingRoom": {
+                                "type": "boolean",
+                                "description": "Enable waiting room before host joins",
+                                "default": false
+                            },
+                            "joinBeforeHost": {
+                                "type": "boolean",
+                                "description": "Allow participants to join before the host",
+                                "default": false
+                            },
+                            "muteUponEntry": {
+                                "type": "boolean",
+                                "description": "Mute all participants on entry",
+                                "default": false
+                            },
+                            "autoRecording": {
+                                "type": "string",
+                                "description": "Auto-recording mode",
+                                "enum": ["none", "local", "cloud"],
+                                "default": "none"
+                            }
+                        }
+                    }
+                }
+            },
+            "MeetingDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "1234567890"
+                    },
+                    "topic": {
+                        "type": "string",
+                        "example": "Weekly Sync"
+                    },
+                    "type": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "startTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-01-01T10:00:00.000Z"
+                    },
+                    "durationMinutes": {
+                        "type": "integer",
+                        "example": 30
+                    },
+                    "timezone": {
+                        "type": "string",
+                        "example": "UTC"
+                    },
+                    "joinUrl": {
+                        "type": "string",
+                        "example": "https://zoom.us/j/1234567890"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "waiting"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-01-01T09:00:00.000Z"
+                    }
+                }
+            }
+        }
+    }
+}
